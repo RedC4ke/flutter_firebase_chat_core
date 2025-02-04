@@ -19,8 +19,8 @@ class FirebaseChatCore {
   /// see [FirebaseChatCoreConfig].
   FirebaseChatCoreConfig config = const FirebaseChatCoreConfig(
     null,
-    'rooms',
-    'users',
+    'Rooms',
+    'Users',
   );
 
   /// Current logged in user in Firebase. Does not update automatically.

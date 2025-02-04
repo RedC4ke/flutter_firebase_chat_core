@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 /// Extension with one [toShortString] method.
@@ -24,6 +25,14 @@ Future<Map<String, dynamic>> fetchUser(
   final doc = await instance.collection(usersCollectionName).doc(userId).get();
 
   final data = doc.data()!;
+
+  final avatarRef = data['avatar'] as String?;
+  if (avatarRef != null) {
+    final avatarUrl =
+        FirebaseStorage.instance.ref(data['avatar']).getDownloadURL();
+
+    data['imageUrl'] = await avatarUrl;
+  }
 
   data['createdAt'] = data['createdAt']?.millisecondsSinceEpoch;
   data['id'] = doc.id;
